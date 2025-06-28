@@ -20,8 +20,12 @@
           <li><a href="#home" class="hover:text-gray-200" data-i18n="navHome">Home</a></li>
           <li><a href="#products" class="hover:text-gray-200" data-i18n="navProducts">Products</a></li>
           <li><a href="#contact" class="hover:text-gray-200" data-i18n="navContact">Contact</a></li>
-          <li><a href="#cart" class="hover:text-gray-200" data-i18n="navCart">Cart (<span id="cart-count">0</span>) <i class="fas fa-shopping-cart ml-2"></i></a></li>
-          <li><a href="#checkout" class="hover:text-gray-200" data-i18n="navCheckout">Checkout <i class="fas fa-credit-card ml-2"></i></a></li>
+          <li>
+            <a href="#cart" class="hover:text-gray-200" title="Cart">
+              <i class="fas fa-shopping-cart mr-2"></i>
+              <span id="cart-count">0</span>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
@@ -40,7 +44,9 @@
   <!-- Каталог товаров -->
   <section id="products" class="py-16 bg-white">
     <div class="container mx-auto">
-      <h2 class="text-3xl font-bold text-red-600 text-center mb-8" data-i18n="productsTitle">Our Products <i class="fas fa-th-large ml-2"></i></h2>
+      <h2 class="text-3xl font-bold text-red-600 text-center mb-8">
+        <span data-i18n="productsTitle">Our Products</span> <i class="fas fa-th-large ml-2"></i>
+      </h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="product-list">
         <!-- Товары будут добавлены через JavaScript -->
       </div>
@@ -50,48 +56,11 @@
   <!-- Корзина -->
   <section id="cart" class="py-16 bg-gray-100">
     <div class="container mx-auto">
-      <h2 class="text-3xl font-bold text-red-600 text-center mb-8" data-i18n="cartTitle">Cart <i class="fas fa-shopping-cart ml-2"></i></h2>
+      <h2 class="text-3xl font-bold text-red-600 text-center mb-8">
+        <span data-i18n="cartTitle">Cart</span> <i class="fas fa-shopping-cart ml-2"></i>
+      </h2>
       <div id="cart-items" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md"></div>
       <p class="text-center text-xl text-red-600 mt-4" data-i18n="cartTotal">Total: <span id="cart-total">0</span> €</p>
-      <a href="#checkout" class="mt-4 inline-block bg-red-600 text-white px-6 py-2 rounded-md hover:bg-red-700" data-i18n="proceedToCheckout">Proceed to Checkout</a>
-    </div>
-  </section>
-
-  <!-- Оплата -->
-  <section id="checkout" class="py-16 bg-white">
-    <div class="container mx-auto">
-      <h2 class="text-3xl font-bold text-red-600 text-center mb-8" data-i18n="checkoutTitle">Checkout</h2>
-      <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
-        <div>
-          <label for="card-number" class="block text-sm font-medium text-red-600" data-i18n="cardNumber">Card Number</label>
-          <input type="text" id="card-number" class="mt-1 block w-full p-2 border border-red-600 rounded-md" placeholder="1234 5678 9012 3456">
-        </div>
-        <div class="mt-4">
-          <label for="expiry-date" class="block text-sm font-medium text-red-600" data-i18n="expiryDate">Expiry Date</label>
-          <input type="text" id="expiry-date" class="mt-1 block w-full p-2 border border-red-600 rounded-md" placeholder="MM/YY">
-        </div>
-        <div class="mt-4">
-          <label for="cvv" class="block text-sm font-medium text-red-600" data-i18n="cvv">CVV</label>
-          <input type="text" id="cvv" class="mt-1 block w-full p-2 border border-red-600 rounded-md" placeholder="123">
-        </div>
-        <div class="mt-4">
-          <label class="block text-sm font-medium text-red-600" data-i18n="paymentMethod">Payment Method</label>
-          <div class="mt-2">
-            <label class="inline-flex items-center">
-              <input type="radio" name="payment-method" value="visa" class="form-radio text-red-600" checked>
-              <span class="ml-2">Visa</span>
-            </label>
-            <label class="inline-flex items-center ml-6">
-              <input type="radio" name="payment-method" value="mastercard" class="form-radio text-red-600">
-              <span class="ml-2">MasterCard</span>
-            </label>
-          </div>
-        </div>
-        <div class="mt-6">
-          <button onclick="processPayment()" class="w-full bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700" data-i18n="payNow">Pay Now</button>
-        </div>
-        <p class="mt-4 text-sm text-gray-600" data-i18n="paymentNote">Note: This is a demo. For real transactions, integrate a payment gateway like Stripe and configure your bank account with IBAN (AT913200000014121354) and BIC (RLNWATWW) to receive funds.</p>
-      </div>
     </div>
   </section>
 
@@ -154,7 +123,6 @@
         navProducts: "Products",
         navContact: "Contact",
         navCart: "Cart",
-        navCheckout: "Checkout",
         searchPlaceholder: "Search products...",
         bannerTitle: "Everything for Your Project!",
         bannerSubtitle: "Wide range of construction materials and tools at great prices",
@@ -162,14 +130,6 @@
         productsTitle: "Our Products",
         cartTitle: "Cart",
         cartTotal: "Total:",
-        proceedToCheckout: "Proceed to Checkout",
-        checkoutTitle: "Checkout",
-        cardNumber: "Card Number",
-        expiryDate: "Expiry Date",
-        cvv: "CVV",
-        paymentMethod: "Payment Method",
-        payNow: "Pay Now",
-        paymentNote: "Note: This is a demo. For real transactions, integrate a payment gateway like Stripe and configure your bank account with IBAN (AT913200000014121354) and BIC (RLNWATWW) to receive funds.",
         contactTitle: "Contact Us",
         contactName: "Name",
         contactEmail: "Email",
@@ -177,7 +137,7 @@
         contactEmailLink: "Send Email",
         contactSubmit: "Submit",
         footerText: "© 2025 BuildShop. All rights reserved.",
-        alertSuccess: "Payment processed successfully! We will contact you soon.",
+        alertSuccess: "Message sent successfully! We will contact you soon.",
         alertError: "Please fill in all fields."
       },
       de: {
@@ -186,7 +146,6 @@
         navProducts: "Produkte",
         navContact: "Kontakt",
         navCart: "Warenkorb",
-        navCheckout: "Kasse",
         searchPlaceholder: "Produkte suchen...",
         bannerTitle: "Alles für Ihr Projekt!",
         bannerSubtitle: "Breite Auswahl an Baumaterialien und Werkzeugen zu tollen Preisen",
@@ -194,14 +153,6 @@
         productsTitle: "Unsere Produkte",
         cartTitle: "Warenkorb",
         cartTotal: "Gesamt:",
-        proceedToCheckout: "Zur Kasse gehen",
-        checkoutTitle: "Kasse",
-        cardNumber: "Kartennummer",
-        expiryDate: "Ablaufdatum",
-        cvv: "CVV",
-        paymentMethod: "Zahlungsmethode",
-        payNow: "Jetzt bezahlen",
-        paymentNote: "Hinweis: Dies ist eine Demo. Für echte Transaktionen einen Zahlungsdienst wie Stripe integrieren und Ihr Bankkonto mit IBAN (AT913200000014121354) und BIC (RLNWATWW) konfigurieren, um Gelder zu erhalten.",
         contactTitle: "Kontaktieren Sie uns",
         contactName: "Name",
         contactEmail: "E-Mail",
@@ -209,7 +160,7 @@
         contactEmailLink: "E-Mail senden",
         contactSubmit: "Absenden",
         footerText: "© 2025 BauShop. Alle Rechte vorbehalten.",
-        alertSuccess: "Zahlung erfolgreich verarbeitet! Wir werden Sie bald kontaktieren.",
+        alertSuccess: "Nachricht erfolgreich gesendet! Wir werden Sie bald kontaktieren.",
         alertError: "Bitte füllen Sie alle Felder aus."
       }
     };
@@ -237,6 +188,8 @@
         const key = element.getAttribute('data-i18n-placeholder');
         element.placeholder = translations[lang][key];
       });
+      // Update title attributes for accessibility
+      document.querySelector('a[href="#cart"]').setAttribute('title', translations[lang].navCart);
       renderProducts();
       updateCart();
     }
@@ -258,10 +211,17 @@
             <img src="${product.image}" alt="${product.name[currentLang]}" class="w-full h-48 object-cover rounded-md mb-4" onerror="this.src='https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0';">
             <h3 class="text-xl font-semibold text-red-600">${product.name[currentLang]}</h3>
             <p class="text-gray-600">${product.price.toFixed(2)} €</p>
-            <button onclick="addToCart(${product.id})" class="mt-4 bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700">${translations[currentLang].bannerButton}</button>
+            <button class="add-to-cart mt-4 bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700" data-id="${product.id}">Add to Cart</button>
           </div>
         `;
         productList.innerHTML += productCard;
+      });
+      // Делегирование событий для кнопок "Add to Cart"
+      productList.addEventListener('click', (e) => {
+        if (e.target.classList.contains('add-to-cart')) {
+          const productId = parseInt(e.target.getAttribute('data-id'));
+          addToCart(productId);
+        }
       });
     }
     renderProducts();
@@ -288,8 +248,13 @@
     // Добавление в корзину
     function addToCart(productId) {
       const product = products.find(p => p.id === productId);
-      cart.push(product);
-      updateCart();
+      if (product) {
+        cart.push(product);
+        updateCart();
+        console.log(`Added ${product.name[currentLang]} to cart. Cart count: ${cart.length}`);
+      } else {
+        console.error(`Product with id ${productId} not found.`);
+      }
     }
 
     // Обновление корзины
@@ -306,7 +271,7 @@
         cartItems.innerHTML += `
           <div class="flex justify-between items-center mb-4">
             <span>${item.name[currentLang]} - ${item.price.toFixed(2)} €</span>
-            <button onclick="removeFromCart(${index})" class="text-red-600 hover:text-red-800">${translations[currentLang].navCart}</button>
+            <button onclick="removeFromCart(${index})" class="text-red-600 hover:text-red-800">Remove</button>
           </div>
         `;
       });
@@ -329,25 +294,6 @@
         document.getElementById('name').value = '';
         document.getElementById('email').value = '';
         document.getElementById('message').value = '';
-      } else {
-        alert(translations[currentLang].alertError);
-      }
-    }
-
-    // Обработка оплаты (демо)
-    function processPayment() {
-      const cardNumber = document.getElementById('card-number').value;
-      const expiryDate = document.getElementById('expiry-date').value;
-      const cvv = document.getElementById('cvv').value;
-      const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
-
-      if (cardNumber && expiryDate && cvv) {
-        alert(translations[currentLang].alertSuccess.replace('Message', 'Payment') + ` (${paymentMethod.toUpperCase()})`);
-        document.getElementById('card-number').value = '';
-        document.getElementById('expiry-date').value = '';
-        document.getElementById('cvv').value = '';
-        cart = []; // Очистка корзины после оплаты
-        updateCart();
       } else {
         alert(translations[currentLang].alertError);
       }
