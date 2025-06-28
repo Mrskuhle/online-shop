@@ -1,37 +1,55 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Construction Store</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body class="bg-white font-sans">
-  <!-- Навигация -->
-  <nav class="bg-red-600 text-white p-4">
-    <div class="container mx-auto flex justify-between items-center">
-      <h1 class="text-2xl font-bold" data-i18n="storeName">BuildShop</h1>
-      <div class="flex items-center space-x-4">
-        <input type="text" id="search" data-i18n-placeholder="searchPlaceholder" placeholder="Search products..." class="p-2 rounded-md text-black">
-        <button onclick="updateLanguage('en')" class="p-2 rounded-md text-black bg-white text-xl">🇬🇧</button>
-        <button onclick="updateLanguage('de')" class="p-2 rounded-md text-black bg-white text-xl">🇩🇪</button>
-        <ul class="flex space-x-6">
-          <li><a href="#home" class="hover:text-gray-200" data-i18n="navHome">Home</a></li>
-          <li><a href="#products" class="hover:text-gray-200" data-i18n="navProducts">Products</a></li>
-          <li><a href="#contact" class="hover:text-gray-200" data-i18n="navContact">Contact</a></li>
-          <li>
-            <a href="#cart" class="hover:text-gray-200" title="Cart">
-              <i class="fas fa-shopping-cart mr-2"></i>
-              <span id="cart-count">0</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
 
-  <!-- Баннер -->
+<!-- Navigation -->
+<nav class="bg-red-600 text-white p-4">
+  <div class="container mx-auto flex justify-between items-center">
+    <h1 class="text-2xl font-bold" data-i18n="storeName">BuildShop</h1>
+    <div class="flex items-center space-x-4">
+      <input type="text" id="search" data-i18n-placeholder="searchPlaceholder" placeholder="Search products..." class="p-2 rounded-md text-black">
+
+      <!-- Flag buttons -->
+      <div class="flex items-center space-x-2">
+        <button onclick="updateLanguage('en')" class="p-1 bg-white rounded-md">
+          <img src="https://flagcdn.com/w40/gb.png" alt="English" class="w-6 h-4">
+        </button>
+        <button onclick="updateLanguage('de')" class="p-1 bg-white rounded-md">
+          <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" class="w-6 h-4">
+        </button>
+      </div>
+
+      <!-- Navigation links -->
+      <ul class="flex space-x-6 items-center">
+        <li><a href="#home" class="hover:text-gray-200" data-i18n="navHome">Home</a></li>
+        <li><a href="#products" class="hover:text-gray-200" data-i18n="navProducts">Products</a></li>
+        <li><a href="#contact" class="hover:text-gray-200" data-i18n="navContact">Contact</a></li>
+        <li>
+          <a href="#cart" class="hover:text-gray-200 flex items-center" title="Cart">
+            <i class="fas fa-shopping-cart mr-2"></i>
+            <span id="cart-count">0</span>
+          </a>
+        </li>
+        <li>
+          <a href="#checkout" class="hover:text-gray-200" title="Checkout">
+            <i class="fas fa-file-invoice"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+  <!-- Banner -->
   <section id="home" class="py-20 bg-cover bg-center relative" style="background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2')">
     <div class="absolute inset-0 bg-red-600 opacity-50"></div>
     <div class="container mx-auto text-center relative z-10">
@@ -41,266 +59,190 @@
     </div>
   </section>
 
-  <!-- Каталог товаров -->
+  <!-- Products -->
   <section id="products" class="py-16 bg-white">
     <div class="container mx-auto">
-      <h2 class="text-3xl font-bold text-red-600 text-center mb-8">
-        <span data-i18n="productsTitle">Our Products</span> <i class="fas fa-th-large ml-2"></i>
-      </h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="product-list">
-        <!-- Товары будут добавлены через JavaScript -->
+      <h2 class="text-3xl font-bold text-red-600 text-center mb-8" data-i18n="productsTitle">Our Products</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="product-list"></div>
+    </div>
+  </section>
+
+  <!-- Cart -->
+<!-- Cart -->
+<section id="cart" class="py-16 bg-gray-100">
+  <div class="container mx-auto">
+    <h2 class="text-red-600 text-center mb-8 flex justify-center items-center space-x-3">
+  <i class="fas fa-cart-shopping fa-3x"></i>
+  <span class="text-4xl font-bold" data-i18n="cartTitle">Cart</span>
+</h2>
+
+    <div id="cart-items" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md"></div>
+    <p class="text-center text-xl text-red-600 mt-4" data-i18n="cartTotal">Total: <span id="cart-total">0</span> €</p>
+    <a href="#checkout" class="mt-4 inline-block bg-red-600 text-white px-6 py-2 rounded-md hover:bg-red-700" data-i18n="proceedToOrder">Proceed to Order</a>
+  </div>
+</section>
+
+  <!-- Checkout -->
+  <section id="checkout" class="py-16 bg-white">
+    <div class="container mx-auto">
+      <h2 class="text-3xl font-bold text-red-600 text-center mb-8" data-i18n="checkoutTitle">Order Details</h2>
+      <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
+        <input id="full-name" type="text" class="mb-4 w-full p-2 border border-red-600 rounded-md" placeholder="Full Name">
+        <input id="address" type="text" class="mb-4 w-full p-2 border border-red-600 rounded-md" placeholder="Address">
+        <input id="phone" type="tel" class="mb-4 w-full p-2 border border-red-600 rounded-md" placeholder="Phone">
+        <input id="email" type="email" class="mb-4 w-full p-2 border border-red-600 rounded-md" placeholder="Email">
+        <p class="text-gray-600 mb-2" data-i18n="bankTransfer">Bank Transfer (Banküberweisung)</p>
+        <button onclick="submitOrder()" class="w-full bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700" data-i18n="submitOrder">Submit Order</button>
+        <p class="mt-4 text-sm text-gray-600" data-i18n="bankTransferNote">After submitting, you will receive an email with bank transfer details to complete your order.</p>
       </div>
     </div>
   </section>
 
-  <!-- Корзина -->
-  <section id="cart" class="py-16 bg-gray-100">
-    <div class="container mx-auto">
-      <h2 class="text-3xl font-bold text-red-600 text-center mb-8">
-        <span data-i18n="cartTitle">Cart</span> <i class="fas fa-shopping-cart ml-2"></i>
-      </h2>
-      <div id="cart-items" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md"></div>
-      <p class="text-center text-xl text-red-600 mt-4" data-i18n="cartTotal">Total: <span id="cart-total">0</span> €</p>
-    </div>
-  </section>
-
-  <!-- Форма контактов -->
+  <!-- Contact -->
   <section id="contact" class="py-16 bg-gray-100">
     <div class="container mx-auto">
       <h2 class="text-3xl font-bold text-red-600 text-center mb-8" data-i18n="contactTitle">Contact Us</h2>
       <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
-        <div>
-          <label for="name" class="block text-sm font-medium text-red-600" data-i18n="contactName">Name</label>
-          <input type="text" id="name" class="mt-1 block w-full p-2 border border-red-600 rounded-md">
-        </div>
-        <div class="mt-4">
-          <label for="email" class="block text-sm font-medium text-red-600" data-i18n="contactEmail">Email</label>
-          <input type="email" id="email" class="mt-1 block w-full p-2 border border-red-600 rounded-md">
-        </div>
-        <div class="mt-4">
-          <label for="message" class="block text-sm font-medium text-red-600" data-i18n="contactMessage">Message</label>
-          <textarea id="message" rows="4" class="mt-1 block w-full p-2 border border-red-600 rounded-md"></textarea>
-        </div>
-        <div class="mt-4">
-          <a href="mailto:your.email@example.com" class="flex items-center text-red-600 hover:text-red-800">
-            <i class="fas fa-envelope mr-2"></i> <span data-i18n="contactEmailLink">Send Email</span>
-          </a>
-        </div>
-        <div class="mt-6">
-          <button onclick="submitForm()" class="w-full bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700" data-i18n="contactSubmit">Submit</button>
-        </div>
+        <input id="contact-name" type="text" class="mb-4 w-full p-2 border border-red-600 rounded-md" placeholder="Name">
+        <input id="contact-email" type="email" class="mb-4 w-full p-2 border border-red-600 rounded-md" placeholder="Email">
+        <textarea id="message" rows="4" class="mb-4 w-full p-2 border border-red-600 rounded-md" placeholder="Message"></textarea>
+        <a href="mailto:your.email@example.com" class="text-red-600 hover:text-red-800 block mb-4"><i class="fas fa-envelope mr-2"></i><span data-i18n="contactEmailLink">Send Email</span></a>
+        <button onclick="submitForm()" class="w-full bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700" data-i18n="contactSubmit">Submit</button>
       </div>
     </div>
   </section>
 
-  <!-- Футер -->
+  <!-- Footer -->
   <footer class="bg-red-600 text-white p-4 text-center">
-    <div class="container mx-auto">
-      <p data-i18n="footerText">© 2025 BuildShop. All rights reserved.</p>
-      <div class="flex justify-center space-x-6 mt-4">
-        <a href="mailto:your.email@example.com" class="hover:text-gray-200" title="Email">
-          <i class="fas fa-envelope fa-2x"></i>
-        </a>
-        <a href="https://facebook.com" class="hover:text-gray-200" title="Facebook">
-          <i class="fab fa-facebook fa-2x"></i>
-        </a>
-        <a href="https://instagram.com" class="hover:text-gray-200" title="Instagram">
-          <i class="fab fa-instagram fa-2x"></i>
-        </a>
-        <a href="https://x.com" class="hover:text-gray-200" title="X">
-          <i class="fab fa-x-twitter fa-2x"></i>
-        </a>
-      </div>
-    </div>
+    <p data-i18n="footerText">© 2025 BuildShop. All rights reserved.</p>
   </footer>
 
   <script>
-    // Переводы
     const translations = {
       en: {
-        storeName: "BuildShop",
-        navHome: "Home",
-        navProducts: "Products",
-        navContact: "Contact",
-        navCart: "Cart",
-        searchPlaceholder: "Search products...",
-        bannerTitle: "Everything for Your Project!",
-        bannerSubtitle: "Wide range of construction materials and tools at great prices",
-        bannerButton: "Shop Now",
-        productsTitle: "Our Products",
-        cartTitle: "Cart",
-        cartTotal: "Total:",
-        contactTitle: "Contact Us",
-        contactName: "Name",
-        contactEmail: "Email",
-        contactMessage: "Message",
-        contactEmailLink: "Send Email",
-        contactSubmit: "Submit",
-        footerText: "© 2025 BuildShop. All rights reserved.",
-        alertSuccess: "Message sent successfully! We will contact you soon.",
-        alertError: "Please fill in all fields."
+        storeName: "BuildShop", navHome: "Home", navProducts: "Products", navContact: "Contact",
+        searchPlaceholder: "Search products...", bannerTitle: "Everything for Your Project!",
+        bannerSubtitle: "Wide range of construction materials and tools at great prices", bannerButton: "Shop Now",
+        productsTitle: "Our Products", cartTitle: "Cart", cartTotal: "Total:",
+        proceedToOrder: "Proceed to Order", checkoutTitle: "Order Details", submitOrder: "Submit Order",
+        bankTransfer: "Bank Transfer (Banküberweisung)", bankTransferNote: "After submitting, you will receive an email with bank transfer details to complete your order.",
+        contactTitle: "Contact Us", contactEmailLink: "Send Email", contactSubmit: "Submit",
+        footerText: "© 2025 BuildShop. All rights reserved."
       },
       de: {
-        storeName: "BauShop",
-        navHome: "Startseite",
-        navProducts: "Produkte",
-        navContact: "Kontakt",
-        navCart: "Warenkorb",
-        searchPlaceholder: "Produkte suchen...",
-        bannerTitle: "Alles für Ihr Projekt!",
-        bannerSubtitle: "Breite Auswahl an Baumaterialien und Werkzeugen zu tollen Preisen",
-        bannerButton: "Jetzt einkaufen",
-        productsTitle: "Unsere Produkte",
-        cartTitle: "Warenkorb",
-        cartTotal: "Gesamt:",
-        contactTitle: "Kontaktieren Sie uns",
-        contactName: "Name",
-        contactEmail: "E-Mail",
-        contactMessage: "Nachricht",
-        contactEmailLink: "E-Mail senden",
-        contactSubmit: "Absenden",
-        footerText: "© 2025 BauShop. Alle Rechte vorbehalten.",
-        alertSuccess: "Nachricht erfolgreich gesendet! Wir werden Sie bald kontaktieren.",
-        alertError: "Bitte füllen Sie alle Felder aus."
+        storeName: "BauShop", navHome: "Startseite", navProducts: "Produkte", navContact: "Kontakt",
+        searchPlaceholder: "Produkte suchen...", bannerTitle: "Alles für Ihr Projekt!",
+        bannerSubtitle: "Breite Auswahl an Baumaterialien und Werkzeugen zu tollen Preisen", bannerButton: "Jetzt einkaufen",
+        productsTitle: "Unsere Produkte", cartTitle: "Warenkorb", cartTotal: "Gesamt:",
+        proceedToOrder: "Zur Bestellung fortfahren", checkoutTitle: "Bestelldetails", submitOrder: "Bestellung absenden",
+        bankTransfer: "Banküberweisung", bankTransferNote: "Nach dem Absenden erhalten Sie eine E-Mail mit den Banküberweisungsdetails, um Ihre Bestellung abzuschließen.",
+        contactTitle: "Kontaktieren Sie uns", contactEmailLink: "E-Mail senden", contactSubmit: "Absenden",
+        footerText: "© 2025 BauShop. Alle Rechte vorbehalten."
       }
     };
 
-    // Данные о товарах с тегами
     const products = [
-      { id: 1, name: { en: "Ornamental Blue Tile", de: "Ornamentale Blaue Fliese" }, price: 2.99, image: "OrnamentalBlueTile.jpg", tags: ["tile", "blue", "ornamental"] },
-      { id: 2, name: { en: "Green-White Checker Tile", de: "Grün-Weiße Schachbrettfliese" }, price: 1.99, image: "Green-WhiteCheckerTile.jpg", tags: ["tile", "green", "white", "checker"] },
-      { id: 3, name: { en: "White Diamond Tile", de: "Weiße Rautenfliese" }, price: 2.49, image: "WhiteDiamondTile.jpg", tags: ["tile", "white", "diamond"] },
-      { id: 4, name: { en: "Dark Gray Rectangular Tile", de: "Dunkelgraue Rechteckfliese" }, price: 1.49, image: "DarkGrayRectangularTile.jpg", tags: ["tile", "gray", "rectangular"] },
-      { id: 5, name: { en: "Beige Ornamental Tile", de: "Beige Ornamental Fliese" }, price: 2.79, image: "BeigeOrnamentalTile.jpg", tags: ["tile", "beige", "ornamental"] }
+      { id: 1, name: { en: "Ornamental Blue Tile", de: "Ornamentale Blaue Fliese" }, price: 37.90, image: "OrnamentalBlueTile.jpg", tags: ["tile", "blue"] },
+      { id: 2, name: { en: "Green-White Checker Tile", de: "Grün-Weiße Schachbrettfliese" }, price: 25.00, image: "Green-WhiteCheckertile.jpg", tags: ["green", "checker"] },
+      { id: 3, name: { en: "White Diamond Tile", de: "Weiße Rautenfliese" }, price: 37.88, image: "WhiteDiamondTile.jpg", tags: ["tile", "til", "tiles", "diamond", "white"] },
+      { id: 4, name: { en: "Dark Gray Rectangular Tile", de: "Dunkelgraue Rechteckfliese" }, price: 27.99, image: "DarkGrayRectangularTile.jpg", tags: ["tile", "dark", "concrete", "gray", "rectangular"] },
+      { id: 5, name: { en: "Beige Ornamental Tile", de: "Beige Ornamental Fliese" }, price: 28.99, image: "BeigeOrnamentalTile.jpg", tags: ["tile", "Ornamental", "beige"] },
     ];
 
-    let cart = [];
     let currentLang = 'en';
+    let cart = [];
 
-    // Функция обновления текста
     function updateLanguage(lang) {
       currentLang = lang;
-      document.querySelectorAll('[data-i18n]').forEach(element => {
-        const key = element.getAttribute('data-i18n');
-        element.textContent = translations[lang][key];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key]) el.textContent = translations[lang][key];
       });
-      document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
-        const key = element.getAttribute('data-i18n-placeholder');
-        element.placeholder = translations[lang][key];
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (translations[lang][key]) el.placeholder = translations[lang][key];
       });
-      // Update title attributes for accessibility
-      document.querySelector('a[href="#cart"]').setAttribute('title', translations[lang].navCart);
       renderProducts();
       updateCart();
     }
 
-    // Переключение языка
-    document.querySelectorAll('#language-switcher button').forEach(button => {
-      button.addEventListener('click', () => {
-        updateLanguage(button.getAttribute('onclick').match(/'([^']+)'/)[1]);
-      });
-    });
-
-    // Отображение товаров
-    const productList = document.getElementById('product-list');
-    function renderProducts(filteredProducts = products) {
-      productList.innerHTML = '';
-      filteredProducts.forEach(product => {
-        const productCard = `
+    function renderProducts(list = products) {
+      const container = document.getElementById('product-list');
+      container.innerHTML = '';
+      list.forEach(p => {
+        container.innerHTML += `
           <div class="bg-white p-6 rounded-lg shadow-md border border-red-600">
-            <img src="${product.image}" alt="${product.name[currentLang]}" class="w-full h-48 object-cover rounded-md mb-4" onerror="this.src='https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0';">
-            <h3 class="text-xl font-semibold text-red-600">${product.name[currentLang]}</h3>
-            <p class="text-gray-600">${product.price.toFixed(2)} €</p>
-            <button class="add-to-cart mt-4 bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700" data-id="${product.id}">Add to Cart</button>
-          </div>
-        `;
-        productList.innerHTML += productCard;
-      });
-      // Делегирование событий для кнопок "Add to Cart"
-      productList.addEventListener('click', (e) => {
-        if (e.target.classList.contains('add-to-cart')) {
-          const productId = parseInt(e.target.getAttribute('data-id'));
-          addToCart(productId);
-        }
+            <img src="${p.image}" class="w-full h-48 object-cover rounded-md mb-4">
+            <h3 class="text-xl font-semibold text-red-600">${p.name[currentLang]}</h3>
+            <p class="text-gray-600">${p.price.toFixed(2)} €</p>
+            <button onclick="addToCart(${p.id})" class="mt-4 bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700">Add to Cart</button>
+          </div>`;
       });
     }
-    renderProducts();
 
-    // Улучшенный поиск по названию и тегам
-    document.getElementById('search').addEventListener('input', (e) => {
-      const query = e.target.value.toLowerCase().trim();
-      if (query === '') {
-        renderProducts(products);
-        return;
-      }
-      const filteredProducts = products.filter(product => {
-        const nameMatch = product.name[currentLang].toLowerCase().includes(query);
-        const tagMatch = product.tags.some(tag => tag.toLowerCase().includes(query));
-        return nameMatch || tagMatch;
-      }).sort((a, b) => {
-        const aMatch = a.name[currentLang].toLowerCase().indexOf(query);
-        const bMatch = b.name[currentLang].toLowerCase().indexOf(query);
-        return aMatch - bMatch; // Сортировка по позиции совпадения (лучше в начале)
-      });
-      renderProducts(filteredProducts);
-    });
-
-    // Добавление в корзину
-    function addToCart(productId) {
-      const product = products.find(p => p.id === productId);
-      if (product) {
-        cart.push(product);
-        updateCart();
-        console.log(`Added ${product.name[currentLang]} to cart. Cart count: ${cart.length}`);
-      } else {
-        console.error(`Product with id ${productId} not found.`);
-      }
+    function addToCart(id) {
+      const item = products.find(p => p.id === id);
+      if (item) cart.push(item);
+      updateCart();
     }
 
-    // Обновление корзины
-    function updateCart() {
-      const cartItems = document.getElementById('cart-items');
-      const cartCount = document.getElementById('cart-count');
-      const cartTotal = document.getElementById('cart-total');
-      cartItems.innerHTML = '';
-      cartCount.textContent = cart.length;
-      let total = 0;
-
-      cart.forEach((item, index) => {
-        total += item.price;
-        cartItems.innerHTML += `
-          <div class="flex justify-between items-center mb-4">
-            <span>${item.name[currentLang]} - ${item.price.toFixed(2)} €</span>
-            <button onclick="removeFromCart(${index})" class="text-red-600 hover:text-red-800">Remove</button>
-          </div>
-        `;
-      });
-      cartTotal.textContent = total.toFixed(2);
-    }
-
-    // Удаление из корзины
     function removeFromCart(index) {
       cart.splice(index, 1);
       updateCart();
     }
 
-    // Обработка формы
-    function submitForm() {
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const message = document.getElementById('message').value;
-      if (name && email && message) {
-        alert(translations[currentLang].alertSuccess);
-        document.getElementById('name').value = '';
-        document.getElementById('email').value = '';
-        document.getElementById('message').value = '';
-      } else {
-        alert(translations[currentLang].alertError);
-      }
+    function updateCart() {
+      const items = document.getElementById('cart-items');
+      const count = document.getElementById('cart-count');
+      const total = document.getElementById('cart-total');
+      items.innerHTML = '';
+      let sum = 0;
+      cart.forEach((item, i) => {
+        items.innerHTML += `
+          <div class="flex justify-between items-center mb-2">
+            <span>${item.name[currentLang]} - ${item.price.toFixed(2)} €</span>
+            <button onclick="removeFromCart(${i})" class="text-red-600">✕</button>
+          </div>`;
+        sum += item.price;
+      });
+      count.textContent = cart.length;
+      total.textContent = sum.toFixed(2);
     }
 
-    // Инициализация
-    updateLanguage('en');
+    function submitOrder() {
+      if (!cart.length) return alert("Cart is empty!");
+      const name = document.getElementById('full-name').value.trim();
+      const address = document.getElementById('address').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const email = document.getElementById('email').value.trim();
+      if (!name || !address || !phone || !email) {
+        alert("Please fill in all fields.");
+        return;
+      }
+      alert("Order submitted successfully!");
+      cart = [];
+      updateCart();
+    }
+
+    function submitForm() {
+      const name = document.getElementById('contact-name').value.trim();
+      const email = document.getElementById('contact-email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      if (!name || !email || !message) return alert("Please complete the contact form.");
+      alert("Message sent!");
+    }
+
+    document.getElementById('search').addEventListener('input', e => {
+      const q = e.target.value.toLowerCase().trim();
+      if (!q) return renderProducts();
+      const filtered = products.filter(p =>
+        p.name[currentLang].toLowerCase().includes(q) ||
+        p.tags.some(tag => tag.includes(q))
+      );
+      renderProducts(filtered);
+    });
+
+    renderProducts();
   </script>
 </body>
 </html>
