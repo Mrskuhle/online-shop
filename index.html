@@ -99,11 +99,22 @@
   </section>
 
   <!-- Contact -->
-  <section id="contact">
-  <h2>Contact</h2>
-   <form action="https://formspree.io/f/xblywjd" method="POST"> 
-    <label>Message:<textarea name="message" placeholder="Your message" required></label>
-    </textarea></label><button type="submit">Send</button></form></section>
+ <!-- modify this form HTML and place wherever you want your form -->
+<form
+  action="https://formspree.io/f/xblywjdj"
+  method="POST"
+>
+  <label>
+    Your email:
+    <input type="email" name="email">
+  </label>
+  <label>
+    Your message:
+    <textarea name="message"></textarea>
+  </label>
+  <!-- your other form fields go here -->
+  <button type="submit">Send</button>
+</form>
   <section id="contact" class="py-16 bg-gray-100">
     <div class="container mx-auto">
       <h2 class="text-3xl font-bold text-red-600 text-center mb-8" data-i18n="contactTitle">Contact Us</h2>
