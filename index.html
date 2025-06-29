@@ -99,6 +99,7 @@
   </section>
 
   <!-- Contact -->
+<!-- Contact -->
 <section id="contact" class="py-16 bg-gray-100">
   <div class="container mx-auto">
     <h2 class="text-3xl font-bold text-red-600 text-center mb-8" data-i18n="contactTitle">Contact Us</h2>
@@ -110,6 +111,31 @@
     </form>
   </div>
 </section>
+
+<script>
+  // ... your existing script above here ...
+
+  // Remove the unused submitForm function
+
+  // Add validation and alert for contact form submission
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
+    const name = document.getElementById('contact-name').value.trim();
+    const email = document.getElementById('contact-email').value.trim();
+    const message = document.getElementById('message').value.trim();
+
+    if (!name || !email || !message) {
+      e.preventDefault();
+      alert("Please complete the contact form.");
+    } else {
+      alert("Message sent!");
+      // Formspree will handle actual submission and redirect/response
+    }
+  });
+
+  // NOTE: Your product images use filenames like "OrnamentalBlueTile.jpg".
+  // Ensure these files exist in your project or replace with valid URLs.
+</script>
+
  <!-- Footer -->
   <footer class="bg-red-600 text-white p-4 text-center">
     <p data-i18n="footerText">© 2025 BuildShop. All rights reserved.</p>
