@@ -6,7 +6,6 @@
   <title>Construction Store</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <!-- Add EmailJS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 <body class="bg-white font-sans">
@@ -17,8 +16,6 @@
     <h1 class="text-2xl font-bold" data-i18n="storeName">BuildShop</h1>
     <div class="flex items-center space-x-4">
       <input type="text" id="search" data-i18n-placeholder="searchPlaceholder" placeholder="Search products..." class="p-2 rounded-md text-black">
-
-      <!-- Flag buttons -->
       <div class="flex items-center space-x-2">
         <button onclick="updateLanguage('en')" class="p-1 bg-white rounded-md">
           <img src="https://flagcdn.com/w40/gb.png" alt="English" class="w-6 h-4">
@@ -27,8 +24,6 @@
           <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" class="w-6 h-4">
         </button>
       </div>
-
-      <!-- Navigation links -->
       <ul class="flex space-x-6 items-center">
         <li><a href="#home" class="hover:text-gray-200" data-i18n="navHome">Home</a></li>
         <li><a href="#products" class="hover:text-gray-200" data-i18n="navProducts">Products</a></li>
@@ -87,23 +82,25 @@
     <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
       <input id="full-name" type="text" class="mb-4 w-full p-2 border border-red-600 rounded-md" placeholder="Full Name">
       <input id="address" type="text" class="mb-4 w-full p-2 border border-red-600 rounded-md" placeholder="Address">
-      <input id="phone" type="tel" class="mb-4 w-full p-2 border border-red-600 rounded-md" placeholder="Phone">
+      <input id="phone" type="tel" class="mb-4 w-full p-2 border border-red-600 rounded-md" placeholder="Phone (e.g., +4367761771586)">
       <input id="email" type="email" class="mb-4 w-full p-2 border border-red-600 rounded-md" placeholder="Email">
+      <input id="telegram-chat-id" type="text" class="mb-4 w-full p-2 border border-red-600 rounded-md" placeholder="Telegram Chat ID (optional)">
       <p class="text-gray-600 mb-2" data-i18n="bankTransfer">Bank Transfer (Banküberweisung)</p>
       <div class="mb-4 p-4 bg-gray-100 border border-red-600 rounded-md">
         <p><strong>Account Name:</strong> BuildShop</p>
         <p><strong>IBAN:</strong> DE12345678901234567890</p>
         <p><strong>BIC:</strong> GENODEF1XXX</p>
         <p><strong>Bank:</strong> Example Bank</p>
-        <p class="text-sm text-gray-600">Please include the order number in the transfer details.</p>
+        <p class="text-sm text-gray-600" data-i18n="bankTransferReference">Please include the order number in the transfer details.</p>
       </div>
       <select id="notification-preference" class="mb-4 w-full p-2 border border-red-600 rounded-md">
         <option value="email">Email</option>
         <option value="whatsapp">WhatsApp</option>
         <option value="telegram">Telegram</option>
       </select>
-      <button onclick="submitOrder()" class="w-full bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700" data-i18n="submitOrder">Submit Order</button>
-      <p class="mt-4 text-sm text-gray-600" data-i18n="bankTransferNote">After submitting, you will receive a confirmation with bank transfer details to complete your order.</p>
+      <button id="submit-order" onclick="submitOrder()" class="w-full bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700" data-i18n="submitOrder">Submit Order</button>
+      <p class="mt-4 text-sm text-gray-600" data-i18n="bankTransferNote">After submitting, you will receive a confirmation with bank transfer details via your chosen method.</p>
+      <div id="order-confirmation" class="mt-4 hidden p-4 bg-green-100 border border-green-600 rounded-md"></div>
     </div>
   </div>
 </section>
@@ -127,7 +124,7 @@
 </footer>
 
 <script>
-  // Initialize EmailJS with your User ID
+  // Initialize EmailJS
   (function(){
     emailjs.init("YOUR_EMAILJS_USER_ID"); // Replace with your EmailJS User ID
   })();
@@ -139,7 +136,8 @@
       bannerSubtitle: "Wide range of construction materials and tools at great prices", bannerButton: "Shop Now",
       productsTitle: "Our Products", cartTitle: "Cart", cartTotal: "Total:",
       proceedToOrder: "Proceed to Order", checkoutTitle: "Order Details", submitOrder: "Submit Order",
-      bankTransfer: "Bank Transfer (Banküberweisung)", bankTransferNote: "After submitting, you will receive a confirmation with bank transfer details to complete your order.",
+      bankTransfer: "Bank Transfer (Banküberweisung)", bankTransferNote: "After submitting, you will receive a confirmation with bank transfer details via your chosen method.",
+      bankTransferReference: "Please include the order number in the transfer details.",
       contactTitle: "Contact Us", contactSubmit: "Submit",
       footerText: "© 2025 BuildShop. All rights reserved."
     },
@@ -149,7 +147,8 @@
       bannerSubtitle: "Breite Auswahl an Baumaterialien und Werkzeugen zu tollen Preisen", bannerButton: "Jetzt einkaufen",
       productsTitle: "Unsere Produkte", cartTitle: "Warenkorb", cartTotal: "Gesamt:",
       proceedToOrder: "Zur Bestellung fortfahren", checkoutTitle: "Bestelldetails", submitOrder: "Bestellung absenden",
-      bankTransfer: "Banküberweisung", bankTransferNote: "Nach dem Absenden erhalten Sie eine Bestätigung mit den Banküberweisungsdetails, um Ihre Bestellung abzuschließen.",
+      bankTransfer: "Banküberweisung", bankTransferNote: "Nach dem Absenden erhalten Sie eine Bestätigung mit den Banküberweisungsdetails über die gewählte Methode.",
+      bankTransferReference: "Bitte geben Sie die Bestellnummer in den Überweisungsdetails an.",
       contactTitle: "Kontaktieren Sie uns", contactSubmit: "Absenden",
       footerText: "© 2025 BauShop. Alle Rechte vorbehalten."
     }
@@ -160,12 +159,12 @@
     { id: 2, name: { en: "Green-White Checker Tile", de: "Grün-Weiße Schachbrettfliese" }, price: 25.00, image: "Green-WhiteCheckerTile.jpg", tags: ["green", "checker"] },
     { id: 3, name: { en: "White Diamond Tile", de: "Weiße Rautenfliese" }, price: 37.88, image: "WhiteDiamondTile.jpg", tags: ["tile", "til", "tiles", "diamond", "white"] },
     { id: 4, name: { en: "Dark Gray Rectangular Tile", de: "Dunkelgraue Rechteckfliese" }, price: 27.99, image: "DarkGrayRectangularTile.jpg", tags: ["tile", "dark", "concrete", "gray", "rectangular"] },
-    { id: 5, name: { en: "Beige Ornamental Tile", de: "Beige Ornamental Fliese" }, price: 28.99, image: "BeigeOrnamentalTile.jpg", tags: ["tile", "Ornamental", "beige"] },
+    { id: 5, name: { en: "Beige Ornamental Tile", de: "Beige Ornamental Fliese" }, price: 28.99, image: "BeigeOrnamentalTile.jpg", tags: ["tile", "Ornamental", "beige"] }
   ];
 
   let currentLang = 'en';
   let cart = [];
-  let orderIdCounter = 1000; // Simple order ID generator
+  let orderIdCounter = 1000;
 
   function updateLanguage(lang) {
     currentLang = lang;
@@ -224,27 +223,70 @@
     total.textContent = sum.toFixed(2);
   }
 
+  function validatePhone(phone) {
+    const phoneRegex = /^\+\d{10,15}$/;
+    return phoneRegex.test(phone);
+  }
+
+  function validateEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
   function sendWhatsAppNotification(phone, orderId, items, total, status) {
-    // Placeholder for WhatsApp Business API
-    // Requires server-side integration with WhatsApp Business API
+    // Requires server-side integration with Twilio WhatsApp API
+    // Setup: Sign up at https://www.twilio.com/, get Account SID, Auth Token, and WhatsApp-enabled number
+    // Example server-side Node.js code:
+    /*
+    const twilio = require('twilio');
+    const client = twilio('YOUR_ACCOUNT_SID', 'YOUR_AUTH_TOKEN');
+    client.messages.create({
+      from: 'whatsapp:YOUR_TWILIO_WHATSAPP_NUMBER',
+      to: 'whatsapp:${phone}',
+      body: `Order #${orderId}, Status: ${status}, Items: ${items}, Total: ${total} €`
+    });
+    */
     console.log(`WhatsApp notification to ${phone}: Order #${orderId}, Status: ${status}, Items: ${items}, Total: ${total} €`);
-    // Example: Use Twilio or WhatsApp Business API to send message
-    // fetch('https://api.whatsapp.com/send?phone=' + phone + '&text=' + encodeURIComponent(message));
+    // For testing, use a server endpoint (e.g., /send-whatsapp) and call via fetch
+    /*
+    fetch('YOUR_SERVER_ENDPOINT/send-whatsapp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ phone, orderId, items, total, status })
+    });
+    */
     alert("WhatsApp notifications require server-side setup. Check console for details.");
   }
 
-  function sendTelegramNotification(phone, orderId, items, total, status) {
-    // Placeholder for Telegram Bot API
+  function sendTelegramNotification(chatId, orderId, items, total, status) {
     // Requires server-side integration with Telegram Bot API
-    console.log(`Telegram notification to ${phone}: Order #${orderId}, Status: ${status}, Items: ${items}, Total: ${total} €`);
-    // Example: Use Telegram Bot API with your bot token
-    // fetch('https://api.telegram.org/botYOUR_BOT_TOKEN/sendMessage?chat_id=' + chatId + '&text=' + encodeURIComponent(message));
+    // Setup: Create bot via @BotFather, get Bot Token, and obtain chat ID
+    // Example server-side Node.js code:
+    /*
+    fetch(`https://api.telegram.org/botYOUR_BOT_TOKEN/sendMessage?chat_id=${chatId}&text=Order #${orderId}, Status: ${status}, Items: ${items}, Total: ${total} €`);
+    */
+    console.log(`Telegram notification to ${chatId}: Order #${orderId}, Status: ${status}, Items: ${items}, Total: ${total} €`);
+    // For testing, use a server endpoint (e.g., /send-telegram) and call via fetch
+    /*
+    fetch('YOUR_SERVER_ENDPOINT/send-telegram', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chatId, orderId, items, total, status })
+    });
+    */
     alert("Telegram notifications require server-side setup. Check console for details.");
   }
 
   function submitOrder() {
+    const submitButton = document.getElementById('submit-order');
+    const orderConfirmation = document.getElementById('order-confirmation');
+    submitButton.disabled = true;
+    submitButton.textContent = currentLang === 'en' ? 'Submitting...' : 'Wird gesendet...';
+
     if (!cart.length) {
       alert("Cart is empty!");
+      submitButton.disabled = false;
+      submitButton.textContent = translations[currentLang].submitOrder;
       return;
     }
 
@@ -252,10 +294,34 @@
     const address = document.getElementById('address').value.trim();
     const phone = document.getElementById('phone').value.trim();
     const email = document.getElementById('email').value.trim();
+    const telegramChatId = document.getElementById('telegram-chat-id').value.trim();
     const notificationPreference = document.getElementById('notification-preference').value;
 
     if (!name || !address || !phone || !email) {
-      alert("Please fill in all fields.");
+      alert("Please fill in all required fields.");
+      submitButton.disabled = false;
+      submitButton.textContent = translations[currentLang].submitOrder;
+      return;
+    }
+
+    if (!validatePhone(phone)) {
+      alert("Please enter a valid phone number (e.g., +4367761771586).");
+      submitButton.disabled = false;
+      submitButton.textContent = translations[currentLang].submitOrder;
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      alert("Please enter a valid email address.");
+      submitButton.disabled = false;
+      submitButton.textContent = translations[currentLang].submitOrder;
+      return;
+    }
+
+    if (notificationPreference === 'telegram' && !telegramChatId) {
+      alert("Please provide a Telegram Chat ID for Telegram notifications.");
+      submitButton.disabled = false;
+      submitButton.textContent = translations[currentLang].submitOrder;
       return;
     }
 
@@ -264,7 +330,22 @@
     const total = cart.reduce((sum, item) => sum + item.price, 0).toFixed(2);
     const items = cart.map(item => `${item.name[currentLang]} - ${item.price.toFixed(2)} €`).join('\n');
 
-    // Send email notification using EmailJS
+    // Display order confirmation
+    orderConfirmation.classList.remove('hidden');
+    orderConfirmation.innerHTML = `
+      <p class="text-green-600 font-semibold">${translations[currentLang].submitOrder} #${orderId}</p>
+      <p>${translations[currentLang].bankTransferNote}</p>
+      <p><strong>Items:</strong><br>${items}</p>
+      <p><strong>Total:</strong> ${total} €</p>
+      <p><strong>Payment Instructions:</strong><br>
+         Account Name: BuildShop<br>
+         IBAN: DE12345678901234567890<br>
+         BIC: GENODEF1XXX<br>
+         Bank: Example Bank<br>
+         Reference: Order #${orderId}</p>
+    `;
+
+    // Send email notification
     emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
       name: name,
       email: email,
@@ -273,25 +354,35 @@
       order_id: orderId,
       items: items,
       total: total,
-      status: status
+      status: status,
+      notification_preference: notificationPreference
     }).then(
       () => {
-        alert("Order submitted successfully! Check your email for bank transfer details.");
+        // Send notifications based on preference
         if (notificationPreference === "whatsapp") {
           sendWhatsAppNotification(phone, orderId, items, total, status);
+          sendWhatsAppNotification('+4367761771586', orderId, items, total, status); // Notify your number
         } else if (notificationPreference === "telegram") {
-          sendTelegramNotification(phone, orderId, items, total, status);
+          sendTelegramNotification(telegramChatId, orderId, items, total, status);
+          sendTelegramNotification('YOUR_TELEGRAM_CHAT_ID', orderId, items, total, status); // Replace with your chat ID
         }
+
+        alert("Order submitted successfully! Check your " + notificationPreference + " for details.");
         cart = [];
         updateCart();
         document.getElementById('full-name').value = '';
         document.getElementById('address').value = '';
         document.getElementById('phone').value = '';
         document.getElementById('email').value = '';
+        document.getElementById('telegram-chat-id').value = '';
+        submitButton.disabled = false;
+        submitButton.textContent = translations[currentLang].submitOrder;
       },
       (error) => {
-        alert("Failed to send email notification. Please try again.");
+        alert("Failed to send notification. Please try again.");
         console.error("EmailJS error:", error);
+        submitButton.disabled = false;
+        submitButton.textContent = translations[currentLang].submitOrder;
       }
     );
   }
@@ -304,6 +395,9 @@
     if (!name || !email || !message) {
       e.preventDefault();
       alert("Please complete the contact form.");
+    } else if (!validateEmail(email)) {
+      e.preventDefault();
+      alert("Please enter a valid email address.");
     } else {
       alert("Message sent!");
     }
